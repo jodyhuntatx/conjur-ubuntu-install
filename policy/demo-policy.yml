@@ -1,0 +1,19 @@
+---
+- !policy
+  id: secrets
+  body:
+  - &variables
+    - !variable db-username
+    - !variable db-password
+  - !group consumers
+  - !permit
+    role: !group consumers
+    privilege: [ read, execute ]
+    resource: *variables
+
+- !host test-host
+
+- !grant
+  role: !group secrets/consumers
+  members:
+  - !host test-host
